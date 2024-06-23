@@ -19,7 +19,8 @@ def strip_rtf(text):
 
 
 def app():
-    '''# Load the DXF file
+
+    # Load the DXF file
     dxf_path = 'LauriToru.dxf'
     doc = ezdxf.readfile(dxf_path)
 
@@ -30,12 +31,14 @@ def app():
     # Convert list to JSON
     json_output = json.dumps(all_entities, indent=4)
     with open('DXF.json', 'w') as f:
-        f.write(json_output)'''
+        f.write(json_output)
 
-    table = create_table('DXF.json')
+    # table = create_table('DXF.json')
+    texts_graph = create_text_graph('DXF.json')
 
     # Visualize the DXF json
-    # dxf_visualizer('DXF.json')
+    dxf_visualizer('DXF.json')
+    # visualize_graph(texts_graph)
 
 
 app()

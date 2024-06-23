@@ -2,6 +2,14 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
+style_attributes = {
+    "Note Text (ANSI)": {"fontsize": 12, "fontstyle": "normal"},
+    "Text Style38": {"fontsize": 12, "fontstyle": "italic"},
+    "Text Style39": {"fontsize": 10, "fontstyle": "normal"},
+    "Text Style30": {"fontsize": 12, "fontstyle": "normal"},
+    # Add more styles as needed
+}
+
 
 def dxf_visualizer(json_file):
     # Load JSON data from file
@@ -9,7 +17,7 @@ def dxf_visualizer(json_file):
         data = json.load(file)
 
     # Initialize plot
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(20, 10))
 
     # Iterate through each item in the JSON data
     for item in data:
@@ -20,17 +28,15 @@ def dxf_visualizer(json_file):
             # Plot line
             ax.plot([start_x, end_x], [start_y, end_y], marker='o')
         elif item['type'] in ['TEXT', 'MTEXT', 'ATTDEF']:
-            # Extract coordinates and text
+            # Extract coordinates, text, and style
             x, y = item['coordinates']
             text = item['text']
-            # Plot text
-            ax.text(x, y, text, fontsize=12, ha='left', va='bottom')
-
-    # Set plot title and labels
-    ax.set_title('DXF Plot')
-    ax.set_xlabel('X Coordinate')
-    ax.set_ylabel('Y Coordinate')
-    ax.axis('equal')  # Equal scaling
+            style = item['style']
+            # Get font attributes based on style
+            font_attrs = style_attributes.get(style, {"fontsize": 10, "fontstyle": "normal"})
+            # Plot text with specified font size and style
+            ax.text(x, y, text, fontsize=font_attrs["fontsize"], fontstyle=font_attrs["fontstyle"], ha='left', va='center')
+    ax.axis('off')
 
     # Show plot
     plt.show()

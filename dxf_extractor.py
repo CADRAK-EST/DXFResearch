@@ -5,14 +5,17 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def strip_rtf(text):
     return re.sub(r'\\f[^;]+;|\\H[^;]+;|\\[a-z]+\|[a-z0-9]+\|[a-z0-9]+;', '', text)
+
 
 def generate_json(entities, filename='output.json'):
     # Convert list to JSON
     json_output = json.dumps(entities, indent=4)
     with open(filename, 'w') as f:
         f.write(json_output)
+
 
 def extract_text_entities(text_block):
     text_entities = []
